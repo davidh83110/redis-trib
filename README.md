@@ -1,6 +1,17 @@
 # redis-trib
+
 For older version redis-trib which supported set password on creating.
 
+
+## Docker
+[https://hub.docker.com/repository/docker/davidh83110/redis-trib](https://hub.docker.com/repository/docker/davidh83110/redis-trib)
+
+```
+docker pull davidh83110/redis-trib:latest
+```
+
+
+## Usage
 Clone older version of `redis-trib.rb` which is [0781f056b9](https://github.com/otherpirate/redis/blob/0781f056b99fa88cb56861f9660bef4e2088d3ca/src/redis-trib.rb) from redis official github.
 
 Supports to set `--password` when creating a cluster.
