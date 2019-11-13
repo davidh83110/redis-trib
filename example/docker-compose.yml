@@ -1,0 +1,107 @@
+version: '3'
+services:
+  redis-01:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.101
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-02:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.102
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-03:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.103
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-04:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.104
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-05:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.105
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-06:
+    image: 'redis:3.2.11'
+    networks:
+      redis-test:
+        aliases:
+          - 'redis-cluster'
+        ipv4_address: 172.20.0.106
+    command: |-
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file /data/node.conf
+      --bind 0.0.0.0
+      --requirepass stupidpass
+      --masterauth stupidpass
+  redis-trib:
+    image: davidh83110/redis_trib:latest
+    networks:
+      redis-test:
+    depends_on:
+      - redis-01
+      - redis-02
+      - redis-03
+      - redis-04
+      - redis-05
+      - redis-06
+    environment:
+      - REDIS_PASSWORD=stupidpass
+    entrypoint: /bin/sh
+    command: |-
+      -c "echo 'yes' | ruby /usr/local/bin/redis-trib.rb create --password stupidpass --replicas 1 172.20.0.101:6379 172.20.0.102:6379 172.20.0.103:6379 172.20.0.104:6379 172.20.0.105:6379 172.20.0.106:6379"
+networks:
+  redis-test:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
